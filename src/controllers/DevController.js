@@ -3,11 +3,29 @@ const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
 
 // index(ListAll), show(FindOne), store(Create), update(Alterar), destroy(Deletar)
+// TODO: Update para o objeto 'Dev'
 module.exports = {
     async index(request, response) {
         const devs = await Dev.find();
 
         return response.json(devs);
+    },
+    async show(request, response) {
+        const dev = await Dev.findOne({
+            github_username: {
+                $eq: request.params.github_username
+            }
+        });
+        return response.json(dev);
+    },
+    async update(request, response) {},
+    async destroy(request, response) {
+        const dev = await Dev.deleteOne({
+            github_username: {
+                $eq: request.params.github_username
+            }
+        });
+        return response.json(dev);
     },
     async store(request, response) {
         const { github_username, techs, latitude, longitude } = request.body;
