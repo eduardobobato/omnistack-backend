@@ -7,7 +7,8 @@ module.exports = {
         // busca por tecnologias
 
         const { latitude, longitude, techs } = request.query;
-
+        console.log(request.query);
+        
         const techsArray = parseStringAsArray(techs);
 
         const devs = await Dev.find({
@@ -18,7 +19,7 @@ module.exports = {
                 $near: {
                     $geometry: {
                         type: 'Point',
-                        coordinates: [longitude, latitude]
+                        coordinates: [latitude, longitude]
                     },
                     $maxDistance: 10000
                 }
